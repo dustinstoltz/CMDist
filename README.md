@@ -62,7 +62,7 @@ However, we may be interested in specifying the concept somewhat by addition add
 
 ### Ngrams
 
-What if instead of a compound concept we are interested in a common concept represented with two words (i.e., a bigram)? First, just like with any other word, the ngram must be in the set of embeddings (the fastText pre-trained embeddings have a lot of n&gt;=1 grams). As long as the ngram is in the embeddings, the only difference for `CMDist` is that an underscore rather than a space needs to be placed between words: 
+What if instead of a compound concept we are interested in a common concept represented with two words (i.e., a bigram)? First, just like with any other word, the ngram must be in the set of embeddings (the fastText pre-trained embeddings have a lot of n&ge;1 grams). As long as the ngram is in the embeddings, the only difference for `CMDist` is that an underscore rather than a space needs to be placed between words: 
 
 ```{r}
   
