@@ -1,5 +1,5 @@
 # CMDist: quick start guide
-R package for Concept Mover's Distance, a measure of conceptual engagement in texts via word embeddings.
+R package for Concept Mover's Distance, a measure of concept engagement in texts via word embeddings.
 
 [Dustin S. Stoltz](https://www.dustinstoltz.com) and [Marshall A. Taylor](https://www.marshalltaylor.net)
 
