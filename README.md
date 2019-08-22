@@ -35,8 +35,9 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 ```{r}
     
-    nn = text2vec::sim2(x = my.wv, y = my.wv["thinking", , drop = FALSE], method = "cosine")
-    head(sort(cos_sim[,1], decreasing = TRUE), 10)
+    cos.sim = text2vec::sim2(x = my.wv, y = my.wv["thinking", , drop = FALSE], method = "cosine")
+    
+    head(sort(cos.sim[,1], decreasing = TRUE), 10)
 
 ```
 
