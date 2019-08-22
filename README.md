@@ -52,7 +52,7 @@ Once you have a DTM, word vector matrix and terms denoting focal concepts, the s
 
 ### Compound Concepts
 
-However, we may be interested in specifying the concept somewhat by addition additional terms: for example, we might want to capture "critical thinking." To handle this, it is as simple as specifying both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
+However, we may be interested in specifying the concept somewhat with additional words: for example, we might want to capture "critical thinking." To handle this, it is as simple as specifying both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
 
 ```{r}
   
@@ -86,23 +86,22 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 
 ```{r}
 
-  concept.words <- c("word1", "word2", "word3")
-  
+  # example 1
+  concept.words <- c("thinking", "critical", "thought")
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
   
-  concept.words <- c("word1 word2", "word2_word3")
-  
+  # example 2
+  concept.words <- c("critical thought", "critical_thinking")
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
 
 ```
 ### More Options
 
-The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`. Second, the default distance measure in `text2vec`'s `RWMD` implementation is cosine, but in the original Word Mover's Distance paper which our approach is based off used Euclidean. Therefore, the default is `method = "cosine"`, but can be set to Euclidean.
-
+The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`. Second, the default distance measure in `text2vec`'s `RWMD` implementation is cosine, but the original Word Mover's Distance paper which our approach is based off used Euclidean distance between word embeddings. Therefore, the default is `method = "cosine"`, but can be set to Euclidean.
 
 ```{r}
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv, scale = FALSE, method = "euclidean")
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, scale = FALSE, method = "euclidean")
 
 ```
 
