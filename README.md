@@ -78,7 +78,8 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 
 ```{r}
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, parallel = TRUE, threads = 2)
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, 
+                          parallel = TRUE, threads = 2)
 
 ```
 ### Multiple Distances at Once
@@ -102,7 +103,8 @@ The function comes with a few additional options. First, by default, the closene
 
 ```{r}
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, scale = FALSE, method = "euclidean")
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, 
+                          scale = FALSE, method = "euclidean")
 
 ```
 
