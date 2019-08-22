@@ -26,7 +26,7 @@ One important caveat: the word used to denote a concept need not be in the corpu
 
 ## Single Word
 
-Once you have a DTM and word vector matrix, the simplest example involves finding the distance from a focal concept denoted by a single word, here we use the word "breakfast."
+Once you have a DTM and word vector matrix, the simplest use of CMDist involves finding the distance from a focal concept denoted by a _single word_. Here, we use the word "breakfast."
 
 ```{r}
   
@@ -54,6 +54,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ```
 
+
 ## Parallel CMDist
 
 Calculating CMD relies on text2vec's RWMD, and while it is a more efficient rendering of Word Mover's Distance, it is still a very complex process and thus takes a while. One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM.. Parallelizing is another option, so we decided to build it in. To use parallel calculations just set parallel = TRUE. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
@@ -63,3 +64,16 @@ Calculating CMD relies on text2vec's RWMD, and while it is a more efficient rend
   doc.distances = CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv, parallel = TRUE, threads = 2)
 
 ```
+## Multiple Distances at Once
+
+An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our JCSS paper, we compare Shakespeare's play's engagement with "death" against 200 other concepts.
+
+```{r}
+
+  concept.words <- c("word1", "word1 word2", "word1_word2", "word3")
+  
+  doc.distances = CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
+
+```
+
+### --------------------------------------------------------
