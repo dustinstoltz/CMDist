@@ -57,7 +57,7 @@
                 ## the Work Horse of the function:
                 #require("text2vec")
                 if(parallel==FALSE){
-                dist <- text2vec::dist2(dtm, pdtm, method = text2vec:::RWMD$new(wem, method), norm = 'none')
+                dist <- text2vec::dist2(dtm, pdtm, method = text2vec:::RelaxedWordMoversDistance$new(wem, method), norm = 'none')
                 	}
 
                 if(parallel==TRUE){
