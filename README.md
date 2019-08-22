@@ -82,7 +82,7 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 ```
 ### Multiple Distances at Once
 
-An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our \textit{JCSS} paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts.
+An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts.
 
 ```{r}
 
