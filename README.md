@@ -26,11 +26,11 @@ One important caveat: the word used to denote a concept need not be in the corpu
 
 ## Single Word
 
-Once you have a DTM and word vector matrix, the simplest use of CMDist involves finding the distance from a focal concept denoted by a _single word_. Here, we use the word "breakfast."
+Once you have a DTM and word vector matrix, the simplest use of CMDist involves finding the distance from a focal concept denoted by a _single word_. Here, we use the word "word1."
 
 ```{r}
   
-  doc.distances = CMDist(dtm = my.dtm, cw = "word1", wv = my.wv)
+  doc.distances <- CMDist(dtm = my.dtm, cw = "word1", wv = my.wv)
 
 ```
 
@@ -40,7 +40,7 @@ However, we may be interested in specifying the concept somewhat by addition add
 
 ```{r}
   
-  doc.distances = CMDist(dtm = my.dtm, cw = "word1 word2", wv = my.wv)
+  doc.distances <- CMDist(dtm = my.dtm, cw = "word1 word2", wv = my.wv)
 
 ```
 
@@ -50,7 +50,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ```{r}
   
-  doc.distances = CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv)
+  doc.distances <- CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv)
 
 ```
 
@@ -61,7 +61,7 @@ Calculating CMD relies on text2vec's RWMD, and while it is a more efficient rend
 
 ```{r}
   
-  doc.distances = CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv, parallel = TRUE, threads = 2)
+  doc.distances <- CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv, parallel = TRUE, threads = 2)
 
 ```
 ## Multiple Distances at Once
@@ -70,10 +70,16 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 
 ```{r}
 
-  concept.words <- c("word1", "word1 word2", "word1_word2", "word3")
+  concept.words <- c("word1", "word2", "word3")
   
-  doc.distances = CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
+  doc.distances < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
+  
+  concept.words <- c("word1 word2", "word2_word3")
+  
+  doc.distances < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
 
 ```
+
+For more discussion see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
 ### --------------------------------------------------------
