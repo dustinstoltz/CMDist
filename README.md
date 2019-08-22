@@ -97,7 +97,7 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 ```
 ### More Options
 
-The function comes with a few additional options. First, by default, the closeness scores are normalized using the scale() function in R. If this is not desired, set `scale = FALSE`. Second, the default distance measure in text2vec's `RWMD` is cosine, but in the original Word Mover's Distance paper which our approach is based off used euclidean. Therefore, the default "method" is cosine, but can be set to euclidean.
+The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`. Second, the default distance measure in text2vec's `RWMD` is cosine, but in the original Word Mover's Distance paper which our approach is based off used Euclidean. Therefore, the default "method" is cosine, but can be set to euclidean.
 
 
 ```{r}
