@@ -1,10 +1,11 @@
 # CMDist: quick start guide
-R package for Concept Mover's Distance
+R package for Concept Mover's Distance, a measure of conceptual engagement in texts via word embeddings.
 
 [Dustin S. Stoltz](https://www.dustinstoltz.com) and [Marshall A. Taylor](https://www.marshalltaylor.net)
 
 <img align="middle" src="https://images.squarespace-cdn.com/content/v1/57cf17802e69cf96e1c4f406/1554677109807-MDCV0XG0BIQHJHIWTLCP/ke17ZwdGBToddI8pDm48kH34NSqJ76-ixS257mGaUjh7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmxXXTZVXzkeXI_1XN_RfG8mev2iBWWK1p2MzLH4LINwAedhRYPgYfymgS9t3aYSzh/2019_Stoltz_Taylor_concept_movers_distance.png?format=1500w" width="600" height="400">
 
+## Installing
 
 Install and load the textSpan package from GitHub:
 ```{r}
@@ -16,7 +17,7 @@ Install and load the textSpan package from GitHub:
 
 ## Document-Term Matrix and Word Embeddings Vectors
 
-To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). DTMs can be made either with the `tm`, `text2vec`, `udpipe`, or `Quanteda` package. 
+To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). DTMs can be made either with the `tm`, `text2vec`, `tidytext`, `udpipe`, or `Quanteda` package. 
 
 Ultimately, CMD is only as good as the word embeddings used.
 
