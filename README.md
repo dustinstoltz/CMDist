@@ -53,7 +53,7 @@ However, we may be interested in specifying the concept somewhat by addition add
 
 ```{r}
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "word1 word2", wv = my.wv)
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical thinking", wv = my.wv)
 
 ```
 
@@ -74,7 +74,7 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 
 ```{r}
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "word1_word2", wv = my.wv, parallel = TRUE, threads = 2)
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, parallel = TRUE, threads = 2)
 
 ```
 ### Multiple Distances at Once
