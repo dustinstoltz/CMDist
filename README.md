@@ -30,12 +30,12 @@ One important caveat: the word used to denote a concept need not be in the corpu
 
 ### Selecting Terms Denoting Focal Concepts
 
-The most difficult and important part of using Concept Mover's Distance is selecting terms that denote the concepts of interest. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the the term's nearest neighbors. Here we use the `sim2` function from `text2vec`.
+The most difficult and important part of using Concept Mover's Distance is selecting terms that denote the concepts of interest. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and it's top 10 nearest neighbors.
 
 ```{r}
     
     nn = text2vec::sim2(x = my.wv, y = my.wv["thinking", , drop = FALSE], method = "cosine")
-    head(sort(cos_sim[,1], decreasing = TRUE), 5)
+    head(sort(cos_sim[,1], decreasing = TRUE), 10)
 
 ```
 
