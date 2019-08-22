@@ -16,7 +16,9 @@ Install and load the textSpan package from GitHub:
 
 ## Document-Term Matrix and Word Embeddings Vectors
 
-To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). DTMs can be made either with the `tm`, `text2vec` or `Quanteda` package. Ultimately, CMD is only as good as the word embeddings used.
+To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). DTMs can be made either with the `tm`, `text2vec`, `udpipe`, or `Quanteda` package. 
+
+Ultimately, CMD is only as good as the word embeddings used.
 
 Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/ or https://fasttext.cc/docs/en/english-vectors.html. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words.
 
