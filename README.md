@@ -100,7 +100,7 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 
 ```
 
-As you can see from the figure below, there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, their begins to be performance improvements with parallizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
+As you can see from the figure below (which shows how quickly a single concept is estimated per run with different DTM sizes), there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, their begins to be performance improvements with parallizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
 
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_CMD_performance.png?raw=true" width="800" height="600">
 
