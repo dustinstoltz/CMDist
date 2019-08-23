@@ -15,9 +15,11 @@ Install and load the `CMDist` package from GitHub:
 
 ```
 
-## Document-Term Matrix and Word Embeddings Vectors
+## Document-Term Matrix
 
-To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). DTMs can be made either with the `tm`, `text2vec`, `tidytext`, `udpipe`, or `Quanteda` package. 
+To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). The preferred DTM is sparse matrix as output by `text2vec` and `tidytext`'s `cast_sparse` function, but we have made the package accomodate DTMs made with the `tm`, `udpipe`, or `Quanteda` package or a regular old base R matrix.
+
+##  Word Embeddings Vectors
 
 Ultimately, CMD is only as good as the word embeddings used.
 
@@ -101,7 +103,7 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 As you can see from the figure below, there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, their begins to be performance improvements with parallizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
 
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_CMD_performance.png?raw=true" width="800" height="600">
-Note: this are based off single runs of each size and thread count (so take estimates with a grain of salt). The DTM is based on a large sample of news articles and with sparesness set to 0.99, the vocabulary size (i.e. the number of columns) was 4,869 (which is on the low end for text analysis). 
+_Note: These estimates are based off single runs of each size and thread count (so take with a grain of salt). The DTM is based on a large sample of news articles and with sparesness set to 0.99, the vocabulary size (i.e. the number of columns) was 4,869 (which is on the low end for text analysis)._
 
 
 ### Scaling Output and Vector Comparison Metric
