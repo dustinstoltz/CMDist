@@ -8,7 +8,7 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 ## Installing
 
 Install and load the `CMDist` package from GitHub:
-```{r}
+```r
   # install.packages("devtools")
   devtools::install_github("dustinstoltz/CMDist")
   library(CMDist)
@@ -35,7 +35,7 @@ One important caveat: the word used to denote a concept need not be in the corpu
 
 The most difficult and important part of using Concept Mover's Distance is selecting terms that denote the concepts of interest. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
 
-```{r}
+```r
     
     cos.sim = text2vec::sim2(x = my.wv, y = my.wv["thinking", , drop = FALSE], method = "cosine")
     
@@ -47,7 +47,7 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 Once you have a DTM, word vector matrix and terms denoting focal concepts, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
 
-```{r}
+```r
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv)
 
