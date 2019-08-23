@@ -122,4 +122,4 @@ The function comes with a few additional options. First, by default, the closene
 
 For more discussion of the math behind the measure see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
-### --------------------------------------------------------
+### THE END ----------------------------------------------------------
