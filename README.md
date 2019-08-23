@@ -57,7 +57,7 @@ Once you have a DTM, word vector matrix and terms denoting focal concepts, the s
 
 However, we may be interested in specifying the concept somewhat with additional words: for example, we might want to capture "critical thinking." To handle this, it is as simple as specifying both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
 
-```{r}
+```r
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical thinking", wv = my.wv)
 
@@ -67,7 +67,7 @@ However, we may be interested in specifying the concept somewhat with additional
 
 What if instead of a compound concept we are interested in a common concept represented with two words (i.e., a bigram)? First, just like with any other word, the ngram must be in the set of embeddings (the fastText pre-trained embeddings have a lot of n&ge;1 grams). As long as the ngram is in the embeddings, the only difference for `CMDist` is that an underscore rather than a space needs to be placed between words: 
 
-```{r}
+```r
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv)
 
@@ -76,7 +76,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts.
 
-```{r}
+```r
 
   # example 1
   concept.words <- c("thinking", "critical", "thought")
@@ -93,7 +93,7 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 
 Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering of Word Mover's Distance, it is still a very complex process and thus takes a while. One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we decided to build it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
 
-```{r}
+```r
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, 
                           parallel = TRUE, threads = 2)
@@ -110,7 +110,7 @@ _Note: These estimates are based off single runs of each size and thread count (
 
 The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`.  Second, the default vector comparison metric in `text2vec`'s `RWMD` implementation is __cosine__, but the original Word Mover's Distance paper which our approach is based off used __Euclidean__ distance to compare word embeddings vectors. Therefore, the default is `method = "cosine"`, but can be set to Euclidean.
 
-```{r}
+```r
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, 
                           scale = FALSE, method = "euclidean")
