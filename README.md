@@ -17,7 +17,7 @@ Install and load the `CMDist` package from GitHub:
 
 ## Document-Term Matrix
 
-To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix as output by `text2vec` and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm`, `udpipe`, or `Quanteda` package or a regular old base R matrix.
+To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix as output by `text2vec`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` or `Quanteda` package or a regular old base R matrix.
 
 ##  Word Embeddings Matrix
 
