@@ -17,15 +17,15 @@ Install and load the `CMDist` package from GitHub:
 
 ## Document-Term Matrix
 
-To use the Concept Mover's Distance (CMD) function, you will need a document-term matrix (DTMs) and a matrix of word embeddings vectors (with the "words" as rownames). The preferred DTM is sparse matrix as output by `text2vec` and `tidytext`'s `cast_sparse` function, but we have made the package accomodate DTMs made with the `tm`, `udpipe`, or `Quanteda` package or a regular old base R matrix.
+To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix as output by `text2vec` and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm`, `udpipe`, or `Quanteda` package or a regular old base R matrix.
 
-##  Word Embeddings Vectors
+##  Word Embeddings Matrix
 
-Ultimately, CMD is only as good as the word embeddings used.
+You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. 
 
 Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/ or https://fasttext.cc/docs/en/english-vectors.html. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words.
 
-You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. 
+You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
 
 One important caveat: the word used to denote a concept need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
