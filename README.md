@@ -3,7 +3,7 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 
 [Dustin S. Stoltz](https://www.dustinstoltz.com) and [Marshall A. Taylor](https://www.marshalltaylor.net)
 
-<img align="middle" src="https://images.squarespace-cdn.com/content/v1/57cf17802e69cf96e1c4f406/1554677109807-MDCV0XG0BIQHJHIWTLCP/ke17ZwdGBToddI8pDm48kH34NSqJ76-ixS257mGaUjh7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmxXXTZVXzkeXI_1XN_RfG8mev2iBWWK1p2MzLH4LINwAedhRYPgYfymgS9t3aYSzh/2019_Stoltz_Taylor_concept_movers_distance.png?format=1500w" width="800" height="600">
+<img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_sotu_family_time.png?raw=true"width="800" height="600">
 
 ## Installing
 
@@ -27,7 +27,7 @@ You can also create your own embeddings trained on the corpus on which you are u
 
 One important caveat: the word used to denote a concept need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
-## Use
+## USE
 
 ### Selecting Terms Denoting Focal Concepts
 
@@ -70,18 +70,6 @@ What if instead of a compound concept we are interested in a common concept repr
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv)
 
 ```
-
-
-### Parallel CMDist
-
-Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering of Word Mover's Distance, it is still a very complex process and thus takes a while. One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we decided to build it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
-
-```{r}
-  
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, 
-                          parallel = TRUE, threads = 2)
-
-```
 ### Multiple Distances at Once
 
 An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts.
@@ -97,9 +85,28 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
 
 ```
-### More Options
+## OPTIONS
 
-The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`. Second, the default distance measure in `text2vec`'s `RWMD` implementation is cosine, but the original Word Mover's Distance paper which our approach is based off used Euclidean distance between word embeddings. Therefore, the default is `method = "cosine"`, but can be set to Euclidean.
+### Performance and Parallel CMDist
+
+Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering of Word Mover's Distance, it is still a very complex process and thus takes a while. One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we decided to build it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
+
+```{r}
+  
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, 
+                          parallel = TRUE, threads = 2)
+
+```
+
+As you can see from the figure below, there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, their begins to be performance improvements with parallizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
+
+<img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_CMD_performance.png?raw=true"width="800" height="600">
+Note: this are based off single runs of each size and thread count (so take estimates with a grain of salt). The DTM is based on a large sample of news articles and with sparesness set to 0.99, the vocabulary size (i.e. the number of columns) was 4,869 (which is on the low end for text analysis). 
+
+
+### Scaling Output and Vector Comparison Metric
+
+The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`.  Second, the default vector comparison metric in `text2vec`'s `RWMD` implementation is __cosine__, but the original Word Mover's Distance paper which our approach is based off used __Euclidean__ distance to compare word embeddings vectors. Therefore, the default is `method = "cosine"`, but can be set to Euclidean.
 
 ```{r}
   
@@ -110,6 +117,6 @@ The function comes with a few additional options. First, by default, the closene
 
 
 
-For more discussion see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
+For more discussion of the math behind the measure see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
 ### --------------------------------------------------------
