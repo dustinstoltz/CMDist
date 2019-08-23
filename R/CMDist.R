@@ -55,9 +55,10 @@
                   	}
 
                 ## the Work Horse of the function:
-                #require("text2vec")
+                model <- text2vec::RWMD$new(wem, method)
+                                                           
                 if(parallel==FALSE){
-                dist <- text2vec::dist2(dtm, pdtm, method = text2vec:::RelaxedWordMoversDistance$new(wem, method), norm = 'none')
+                dist <- text2vec::dist2(dtm, pdtm, method = model, norm = 'none')
                 	}
 
                 if(parallel==TRUE){
@@ -67,7 +68,7 @@
                   ind <- bigstatsr:::CutBySize(nrow(dtm), nb = threads)
                   cl  <- parallel::makeCluster(threads)
                   doSNOW::registerDoSNOW(cl)
-                  dist <- .parDist2(dtm, pdtm, wem, ind, method)
+                  dist <- .parDist2(dtm, pdtm, wem, ind, model)
                   on.exit(parallel::stopCluster(cl))
                 	}
                 ##
