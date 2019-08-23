@@ -1,5 +1,5 @@
 # Private helper function to parallize the computation of distance-matrices
-      .parDist2 <- function(dtm, pd, wem, ind, method) { 
+      .parDist2 <- function(dtm, pd, wem, ind, model) { 
               # prepare progress bar
               pb <- utils::txtProgressBar(max = nrow(ind), style = 3)   
               progress <- function(n) utils::setTxtProgressBar(pb, n)
@@ -12,7 +12,7 @@
                       ) %dopar% {
                   a <- as.numeric(ind[i,1])
                   b <- as.numeric(ind[i,2])
-                  dist <- text2vec::dist2(dtm[a:b,], pd, method = RWMD$new(wem, method), norm = 'none')
+                  dist <- text2vec::dist2(dtm[a:b,], pd, method = model, norm = 'none')
                   }
               # Clean-up
               close(pb)
