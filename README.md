@@ -12,6 +12,9 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 `CMDist` relies on an older version of `text2vec` for the time being. We are working as fast as we can to fix it. To install this older version use this code:
 
 ```r
+## If you already have installed the newest version use this:
+#     remove.packages("text2vec")
+
 packageurl <- "https://cran.r-project.org/src/contrib/Archive/text2vec/text2vec_0.5.1.tar.gz"
 install.packages(packageurl, repos=NULL, type="source", dependencies = TRUE)
 ```
