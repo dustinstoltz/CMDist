@@ -6,7 +6,7 @@
 #' @examples cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE)
 #' @export
 #' 
-      CMDist2 <- function(dtm, cw = NULL, cd = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2) {
+      CMDist <- function(dtm, cw = NULL, cd = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2) {
                 
                 # make DTM dgCMatrix sparse if not already
                 if(any(class(dtm)=="simple_triplet_matrix") ){
