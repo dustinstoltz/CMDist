@@ -2,3 +2,4 @@
 
 export(CMDist)
 export(get_antodim)
+export(kusnerRWMD)

@@ -1,6 +1,6 @@
 Package: CMDist
 Title: Calculates Concept Mover's Distance
-Version: 0.2
+Version: 0.1
 Authors@R: 
     c(person(given = "Dustin",
            family = "Stoltz",
@@ -27,4 +27,4 @@ Imports:
     parallel,
     bigstatsr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
