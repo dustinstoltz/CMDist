@@ -45,7 +45,7 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 ### Single Word
 
-Once you have a DTM, word vector matrix and terms denoting focal concepts, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
+Once you have a DTM, word vector matrix, and a term or terms denoting focal concepts, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
 
 ```r
   
@@ -55,7 +55,7 @@ Once you have a DTM, word vector matrix and terms denoting focal concepts, the s
 
 ### Compound Concepts
 
-However, we may be interested in specifying the concept somewhat with additional words: for example, we might want to capture "critical thinking." To handle this, it is as simple as specifying both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
+However, we may be interested in _specifying_ the concept with additional words: for example, we might want to capture "critical thinking." To handle this, it is as simple as including both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
 
 ```r
   
@@ -75,7 +75,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ### Binary Concepts with Cultural Dimensions
 
-In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite (e.g., love and hate) is also likely to be close to the opposing concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to build "cultural dimensions" from word embeddings. The procedure involves generating a list of antonym pairs for a given binary concept, getting the differences between their respective vectors, and averaging the result. The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
+In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to the opposing concept. For example if a document is close to "love" it will also be close to "hate." But, every often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to build "cultural dimensions" from word embeddings. The procedure involves generating a list of antonym pairs for a given binary concept. Then we get the differences between the antonyms' respective vectors, and averaging the result (the `get_antodim()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
 
 ```r
   # first build the cultural dimension:
