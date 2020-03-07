@@ -73,7 +73,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ```
 
-### Binary Concepts with Cultural Dimensions
+### Binary Concepts
 
 In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to the opposing concept. For example if a document is close to "love" it will also be close to "hate." But, every often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to build "cultural dimensions" from word embeddings. The procedure involves generating a list of antonym pairs for a given binary concept. Then we get the differences between the antonyms' respective vectors, and averaging the result (the `get_antodim()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
 
@@ -89,6 +89,8 @@ In the original _JCSS_ paper, we discussed the "binary concept problem," where d
   doc.closeness <- CMDist(dtm = my.dtm, cd = death.cd, wv = my.wv)
 
 ```
+
+## OTHER OPTIONS
 
 ### Multiple Distances at Once
 
@@ -110,7 +112,6 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cd = thinking.cd, wv = my.wv)
 
 ```
-## OPTIONS
 
 ### Performance and Parallel CMDist
 
@@ -142,7 +143,7 @@ The function comes with a few additional options. First, by default, the closene
 ```
 ## Note About Relaxed Word Mover's Distance
 
-The most recent version of `text2vec` changed the algorithm underlying for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. While LC-RWMD decreases computational demands, the decrease in accuracy renders it unusuable for the kind of conceptual engagement Concept Mover's Distance measures. Therefore, we incorporated code from an older version (0.5.1) of `text2vec` written by Dmitriy Selivanov directly into the `CMDist` package.
+The most recent version of `text2vec` changed the underlying algorithm for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. While LC-RWMD decreases computational demands, the decrease in accuracy renders it unusuable for the kind of conceptual engagement Concept Mover's Distance measures. Therefore, we incorporated code from an older version (0.5.1) of `text2vec` written by Dmitriy Selivanov directly into the `CMDist` package.
 
 For more discussion of the math behind Concept Mover's Distance see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
