@@ -4,8 +4,16 @@
 \alias{CMDist}
 \title{Concept Mover's Distance Function}
 \usage{
-CMDist(dtm, cw, wv, method = "cosine", scale = TRUE,
-  parallel = FALSE, threads = 2)
+CMDist(
+  dtm,
+  cw = NULL,
+  cd = NULL,
+  wv,
+  method = "cosine",
+  scale = TRUE,
+  parallel = FALSE,
+  threads = 2
+)
 }
 \arguments{
 \item{Function}{requires a document-term matrix and a matrix of word embeddings.}
@@ -14,7 +22,7 @@ CMDist(dtm, cw, wv, method = "cosine", scale = TRUE,
 The function outputs a dataframe with Concept Mover's Distances for each document.
 }
 \examples{
-cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE
+cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE)
 }
 \references{
 \url{https://journals.sagepub.com/doi/10.1177/2378023119827674}
