@@ -7,18 +7,6 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 
 ## Installing
 
-*** NOTE ***
-
-`CMDist` relies on an older version of `text2vec` for the time being. We are working as fast as we can to fix it. To install this older version use this code:
-
-```r
-## If you already have installed the newest version use this:
-#     remove.packages("text2vec")
-
-packageurl <- "https://cran.r-project.org/src/contrib/Archive/text2vec/text2vec_0.5.1.tar.gz"
-install.packages(packageurl, repos=NULL, type="source", dependencies = TRUE)
-```
-
 Install and load the `CMDist` package from GitHub:
 ```r
   # install.packages("devtools")
@@ -84,9 +72,27 @@ What if instead of a compound concept we are interested in a common concept repr
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv)
 
 ```
+
+### Binary Concepts with Cultural Dimensions
+
+In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite (e.g., love and hate) is also likely to be close to the opposing concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to build "cultural dimensions" from word embeddings. The procedure involves generating a list of antonym pairs for a given binary concept, getting the differences between their respective vectors, and averaging the result. The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
+
+```r
+  # first build the cultural dimension:
+  additions  <- c("death", "casualty", "demise", "dying", "fatality")
+  substracts <- c("life", "survivor", "birth", "living", "endure")
+
+  antonyms <- cbind(additions, substracts)
+  death.cd <- get_antodim(antonyms, my.wv)
+  
+  # input it into the function just like a concept word:
+  doc.closeness <- CMDist(dtm = my.dtm, cd = death.cd, wv = my.wv)
+
+```
+
 ### Multiple Distances at Once
 
-An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts.
+An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts. `CMDist` also incorporate both concept words and cultural dimensions into the same run.
 
 ```r
 
@@ -97,6 +103,11 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
   # example 2
   concept.words <- c("critical thought", "critical_thinking")
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
+  
+    
+  # example 3
+  concept.words <- c("critical thought", "critical_thinking")
+  doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cd = thinking.cd, wv = my.wv)
 
 ```
 ## OPTIONS
@@ -127,11 +138,12 @@ The function comes with a few additional options. First, by default, the closene
   
   doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, 
                           scale = FALSE, method = "euclidean")
-
+                          
 ```
+## Note About Relaxed Word Mover's Distance
 
+The most recent version of `text2vec` changed the algorithm underlying for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. While LC-RWMD decreases computational demands, the decrease in accuracy renders it unusuable for the kind of conceptual engagement Concept Mover's Distance measures. Therefore, we incorporated code from an older version (0.5.1) of `text2vec` written by Dmitriy Selivanov directly into the `CMDist` package.
 
-
-For more discussion of the math behind the measure see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
+For more discussion of the math behind Concept Mover's Distance see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
 ### THE END ----------------------------------------------------------
