@@ -1,6 +1,6 @@
 Package: CMDist
 Title: Calculates Concept Mover's Distance
-Version: 0.1
+Version: 0.3
 Authors@R: 
     c(person(given = "Dustin",
            family = "Stoltz",
