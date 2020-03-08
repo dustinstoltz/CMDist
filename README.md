@@ -23,7 +23,14 @@ To use the Concept Mover's Distance (CMD) function, you will need to transform y
 
 You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. 
 
-Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/ or https://fasttext.cc/docs/en/english-vectors.html. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words.
+Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/ or https://fasttext.cc/docs/en/english-vectors.html. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words. You can download these fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
+
+```r
+    libary(googledrive) # (see https://googledrive.tidyverse.org/)
+    temp <- tempfile()
+    drive_download(as_id("1Z0W9tXF459b6R_bS4zvOhbDNI_nLVpHr"), path = temp, overwrite = TRUE)
+    my.wv <- readRDS(temp)
+```
 
 You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
 
