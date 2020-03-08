@@ -23,7 +23,7 @@ To use the Concept Mover's Distance (CMD) function, you will need to transform y
 
 You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. 
 
-Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/ or https://fasttext.cc/docs/en/english-vectors.html. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words. You can download these fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
+Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/,  https://fasttext.cc/docs/en/english-vectors.html, or https://nlp.stanford.edu/projects/histwords/. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
 
 ```r
     libary(googledrive) # (see https://googledrive.tidyverse.org/)
