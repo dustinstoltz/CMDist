@@ -3,7 +3,10 @@
 #Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by 
 #Atasu et al. (2017) paper. While LC-RWMD decreases computational demands, the decrease in accuracy renders it unusuable 
 #for the kind of conceptual engagement Concept Mover's Distance measures. Therefore, we incorporated code from an 
-#older version (0.5.1) of text2vec written by Dmitriy Selivanov directly into the CMDist package.
+#older version (0.5.1) of text2vec written by Dmitriy Selivanov directly into the CMDist package. For more information, 
+#see Selivanov's text2vec website (http://text2vec.org/index.html). 
+
+  ### From text2vec 0.5.1, by Demitriy Selivanov:
       
       # we assume wv matrix is already normalized. In this case L2 normalized
       # wv - word vectors matrix (WORDS = COLUMNS, because faster subsetting!)
