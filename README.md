@@ -21,9 +21,15 @@ To use the Concept Mover's Distance (CMD) function, you will need to transform y
 
 ##  Word Embeddings Matrix
 
-You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. 
+You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. Word embeddings vectors can be from a __pre-trained source__, for example:
+* [Stanford NLP GloVe vectors](https://nlp.stanford.edu /projects/glove/)
+* [fastText English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
+* [fastText Wiki vectors for 294 languages](https://fasttext.cc/docs/en/pretrained-vectors.html)
+* [HistWords: Word Embeddings for Historical Text](https://nlp.stanford.edu/projects/histwords/)
+* [word2vec GoogleNews vectors](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
+* [NLPL word embeddings repository](http://vectors.nlpl.eu/repository/)
 
-Word embeddings vectors can be from a __pre-trained source__, for example, https://nlp.stanford.edu/projects/glove/,  https://fasttext.cc/docs/en/english-vectors.html, or https://nlp.stanford.edu/projects/histwords/. It might take little data wrangling to get them loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
+It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
 
 ```r
     libary(googledrive) # (see https://googledrive.tidyverse.org/)
