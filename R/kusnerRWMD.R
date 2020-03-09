@@ -6,7 +6,7 @@
 #older version (0.5.1) of text2vec written by Dmitriy Selivanov directly into the CMDist package. For more information, 
 #see Selivanov's text2vec website (http://text2vec.org/index.html). 
 
-  ### From text2vec 0.5.1, by Demitriy Selivanov:
+  ### From text2vec 0.5.1, by Dmitriy Selivanov:
       
       # we assume wv matrix is already normalized. In this case L2 normalized
       # wv - word vectors matrix (WORDS = COLUMNS, because faster subsetting!)
