@@ -17,7 +17,7 @@
       # we assume wv matrix is already normalized. In this case L2 normalized
       # wv - word vectors matrix (WORDS = COLUMNS, because faster subsetting!)
         euclidean_dist_internal = function(m_i, m_j) {
-          euclidean_dist(m_i, m_j)
+          text2vec:::euclidean_dist(m_i, m_j)
         }
 
         dist_internal = function(m_i, m_j, method) {
