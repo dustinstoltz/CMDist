@@ -14,7 +14,11 @@
                     ) %dopar% {
                 a <- as.numeric(ind[i,1])
                 b <- as.numeric(ind[i,2])
-                dist <- text2vec::dist2(dtm[a:b,], pd, method = CMDist::kusnerRWMD$new(wem, method), norm = 'none')
+                # deprecated Kusner et al. RWMD
+                # dist <- text2vec::dist2(dtm[a:b,], pd, method = CMDist::kusnerRWMD$new(wem, method), norm = 'none')
+                # Linear Complexity RWMD
+                dist <- text2vec::RWMD$new(dtm[a:b,], wem)$dist2(pd)
+                dist <- t(dist[1:nrow(pd)-1, , drop=FALSE])
                 }
             # Clean-up
             close(pb)
