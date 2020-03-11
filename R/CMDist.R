@@ -16,7 +16,12 @@
 
             ## workhorse function                
             if(parallel==FALSE){
-            dist <- text2vec::dist2(dtm, pdtm, method = kusnerRWMD$new(wem, method), norm = 'none')
+              # deprecated Kusner et al. RWMD
+              # dist <- text2vec::dist2(dtm, pdtm, method = kusnerRWMD$new(wem, method), norm = 'none')
+              # Linear Complexity RWMD
+                dist <- text2vec::RWMD$new(dtm, wem)$dist2(pdtm)
+                dist <- t(dist[1:nrow(pdtm)-1, , drop=FALSE])
+
             }
 
             if(parallel==TRUE){
