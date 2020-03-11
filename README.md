@@ -40,13 +40,13 @@ It will take a little data wrangling to get these loaded as a matrix in R with r
 
 You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
 
-One important caveat: the word used to denote a concept need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
+One important caveat: the word used to denote a concept or build a cultural dimension need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
 ## USE
 
 ### Selecting Terms Denoting Focal Concepts
 
-The most difficult and important part of using Concept Mover's Distance is selecting terms that denote the concepts of interest. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
+The most difficult and important part of using Concept Mover's Distance is selecting terms. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
 
 ```r
     
@@ -58,7 +58,7 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 ### Single Word
 
-Once you have a DTM, word vector matrix, and a term or terms denoting focal concepts, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
+Once you have a DTM, word vector matrix, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
 
 ```r
   
@@ -103,7 +103,7 @@ In the original _JCSS_ paper, we discussed the "binary concept problem," where d
 
 ```
 
-## OTHER OPTIONS
+## OTHER OPTIONS AND CONSIDERATIONS
 
 ### Multiple Distances at Once
 
@@ -118,7 +118,6 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
   # example 2
   concept.words <- c("critical thought", "critical_thinking")
   doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, wv = my.wv)
-  
     
   # example 3
   concept.words <- c("critical thought", "critical_thinking")
@@ -158,7 +157,7 @@ By default, the outputs are normalized using the `scale()` function in R. If thi
 
 The vector comparison metric in `text2vec`'s `LC-RWMD` implementation is __cosine__, but the Kusner et al. (2015) and Atasu et al. (2017) papers used __Euclidean__ distance to compare word embeddings vectors. The `LC-RWMD` implementation no longer includes the option of specifiying Euclidean distance, however, in all of our comparisons of CMD using Euclidean and cosine (under the previous RWMD implementation) the results were nearly identical.
 
-## Note About Linear Complexity Relaxed Word Mover's Distance
+### Note About Linear Complexity Relaxed Word Mover's Distance
 
 The most recent version of `text2vec` changed the underlying algorithm for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. LC-RWMD not only reduces the computational demands considerably, if we take the maximum of the two triangles, they are precisely the same as the previous algorithm using Kusner et al's approach. As far as our tests have shown, the triangle corresponding to treating the pseudo-document as a "query" and the documents as a "collection" (see the [text2vec documentation](https://cran.r-project.org/web/packages/text2vec/text2vec.pdf), p. 28) will always return this maximum, and therefore there is no reason for the additional comparison step. If you have reason to believe this is not the case, please contact us and we will share the code necessary to reproduce results with the original Kusner et al. approach to check.
 
