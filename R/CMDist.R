@@ -48,11 +48,11 @@
 
             # convert distances to similarities
             if(scale == TRUE) {
-              df <- as.data.frame(scale(df)*-1)
+              df <- as.data.frame(scale(df))
             }
 
             if(scale == FALSE) {
-              df <- (df)*-1
+              df <- (df)
             }
 
             #
