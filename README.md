@@ -34,7 +34,7 @@ It will take a little data wrangling to get these loaded as a matrix in R with r
 ```r
     libary(googledrive) # (see https://googledrive.tidyverse.org/)
     temp <- tempfile()
-    drive_download(as_id("1Z0W9tXF459b6R_bS4zvOhbDNI_nLVpHr"), path = temp, overwrite = TRUE)
+    drive_download(as_id("1Mdr9Jq-0IzoHd37SHLw1aHTM7nB-oNec"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
 ```
 
@@ -128,7 +128,9 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 
 ### Performance and Parallel CMDist
 
-Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering of Word Mover's Distance, it is still a very complex process and thus takes a while. One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we decided to build it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
+Calculating `CMD` (as of version 0.6.0) relies on [Linear Complexity RWMD](https://arxiv.org/abs/1711.07227) or `LC-RWMD`. The performance gain over the previous `RWMD` implementation is considerable. Nevertheless, it may be desireable to boost performance further on especially large projects. 
+
+One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we built it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
 
 ```r
   
@@ -137,7 +139,7 @@ Calculating `CMD` relies on `RWMD`, and while it is a more efficient rendering o
 
 ```
 
-As you can see from the figure below (which shows how quickly a single concept is estimated per run with different DTM sizes), there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, there begins to be performance improvements with parallelizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
+As you can see from the figure below (which shows how quickly a single concept word is estimated per run with different DTM sizes), there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, there begins to be performance improvements with parallelizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
 
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_CMD_performance.png?raw=true" width="800" height="600">
 
@@ -154,9 +156,9 @@ The function comes with a few additional options. First, by default, the closene
                           scale = FALSE, method = "euclidean")
                           
 ```
-## Note About Relaxed Word Mover's Distance
+## Note About Linear Complexity Relaxed Word Mover's Distance
 
-The most recent version of `text2vec` changed the underlying algorithm for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. While LC-RWMD decreases computational demands, the decrease in accuracy renders it unusuable for the kind of conceptual engagement Concept Mover's Distance measures. Therefore, we incorporated code from an older version (0.5.1) of `text2vec` written by Dmitriy Selivanov directly into the `CMDist` package. For more information, see Selivanov's `text2vec` [website](http://text2vec.org/index.html).
+The most recent version of `text2vec` changed the underlying algorithm for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. LC-RWMD not only reduces the computational demands considerably, if we take the maximum of the two triangles, they are precisely the same as the previous algorithm using Kusner et al's approach. As far as our tests have shown, the triangle corresponding to treating the pseudo-document as a "query" and the documents as a "collection" (see the [text2vec documentation](https://cran.r-project.org/web/packages/text2vec/text2vec.pdf), p. 28) will always return this maximum, and therefore there is no reason for the additional comparison step. If you have reason to believe this is not the case, please contact us and we will share the code necessary to reproduce results with the original Kusner et al. approach to check.
 
 For more discussion of the math behind Concept Mover's Distance see Stoltz and Taylor (2019) "[Concept Mover's Distance](https://link.springer.com/article/10.1007/s42001-019-00048-6)" in the _Journal of Computational Social Science_. The replication code and data for that paper can be found here: https://github.com/dustinstoltz/concept_movers_distance_jcss
 
