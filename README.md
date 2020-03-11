@@ -138,13 +138,13 @@ One way to reduce complexity and thus time (without a noticeable drop in accurac
                           parallel = TRUE, threads = 2)
 
 ```
-
+<!-- 
 As you can see from the figure below (which shows how quickly a single concept word is estimated per run with different DTM sizes), there is an overhead to setting up parallel processing and the pay off is only really gained with larger matrices. When the DTM has about 5000 documents, there begins to be performance improvements with parallelizing. However, specifying 6 threads doesn't have much more of an improvement over 2 threads, but we presume this is not the case for DTMs with document numbers above the limit of our example.
 
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_CMD_performance.png?raw=true" width="800" height="600">
 
 *Note: These estimates are based off single runs of each size and thread count (so take with a grain of salt). The DTM is based on a large sample of news articles and with sparesness set to 0.99, the vocabulary size (i.e. the number of columns) was 4,869 (which is on the low end for text analysis).*
-
+-->
 
 ### Scaling Output and Vector Comparison Metric
 
