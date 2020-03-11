@@ -148,14 +148,16 @@ As you can see from the figure below (which shows how quickly a single concept w
 
 ### Scaling Output and Vector Comparison Metric
 
-The function comes with a few additional options. First, by default, the closeness scores are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`.  Second, the default vector comparison metric in `text2vec`'s `RWMD` implementation is __cosine__, but the original Word Mover's Distance paper which our approach is based off used __Euclidean__ distance to compare word embeddings vectors. Therefore, the default is `method = "cosine"`, but can be set to `method = "euclidean"`.
+By default, the outputs are normalized using the `scale()` function in R. If this is not desired, set `scale = FALSE`.  
 
 ```r
   
-  doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, 
-                          scale = FALSE, method = "euclidean")
+  doc.closeness <- CMDist(dtm = my.dtm, cw = "thinking", wv = my.wv, scale = FALSE)
                           
 ```
+
+The vector comparison metric in `text2vec`'s `LC-RWMD` implementation is __cosine__, but the Kusner et al. (2015) and Atasu et al. (2017) papers used __Euclidean__ distance to compare word embeddings vectors. The `LC-RWMD` implementation no longer includes the option of specifiying Euclidean distance, however, in all of our comparisons of CMD using Euclidean and cosine (under the previous RWMD implementation) the results were nearly identical.
+
 ## Note About Linear Complexity Relaxed Word Mover's Distance
 
 The most recent version of `text2vec` changed the underlying algorithm for calculating distances between two documents. Rather than the Relaxed Word Mover's Distance (RWMD) as discussed in Kusner et al's  (2015) "From Word Embeddings To Document Distances", it now uses the Linear-Complexity Relaxed Word Mover's Distance (LC-RWMD) as described by Atasu et al. (2017) paper. LC-RWMD not only reduces the computational demands considerably, if we take the maximum of the two triangles, they are precisely the same as the previous algorithm using Kusner et al's approach. As far as our tests have shown, the triangle corresponding to treating the pseudo-document as a "query" and the documents as a "collection" (see the [text2vec documentation](https://cran.r-project.org/web/packages/text2vec/text2vec.pdf), p. 28) will always return this maximum, and therefore there is no reason for the additional comparison step. If you have reason to believe this is not the case, please contact us and we will share the code necessary to reproduce results with the original Kusner et al. approach to check.
