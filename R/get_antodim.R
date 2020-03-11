@@ -7,7 +7,7 @@
 #' @export
    get_antodim <- function(antonyms, wv){
          # check that word vectors exist for all words
-         words <- c(antonyms[,1], antonyms[,2])
+         words <- unlist( c(antonyms[,1], antonyms[,2]) )
          bad.words <- words[!(words %in% rownames(wv) )]
          if( length(bad.words) != 0 ){
          bad.words <- paste(bad.words, collapse='; ' ) 
