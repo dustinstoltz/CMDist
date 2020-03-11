@@ -29,7 +29,7 @@ You will also need a matrix of word embeddings vectors (with the "words" as rown
 * [word2vec GoogleNews vectors](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
 * [NLPL word embeddings repository](http://vectors.nlpl.eu/repository/)
 
-It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText Word Vectors (wiki-news-300d-1M) hosted on Google Drive: 
+It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText Word Vectors (crawl-300d-2M.vec) hosted on Google Drive: 
 
 ```r
     libary(googledrive) # (see https://googledrive.tidyverse.org/)
