@@ -32,7 +32,7 @@ You will also need a matrix of word embeddings vectors (with the "words" as rown
 It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText English Word Vectors (crawl-300d-2M.vec) hosted on Google Drive: 
 
 ```r
-    libary(googledrive) # (see https://googledrive.tidyverse.org/)
+    library(googledrive) # (see https://googledrive.tidyverse.org/)
     temp <- tempfile()
     drive_download(as_id("1crWGb3VrS6_2mTdJLKiq9Ymz9dC_7U7N"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
