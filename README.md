@@ -29,12 +29,12 @@ You will also need a matrix of word embeddings vectors (with the "words" as rown
 * [word2vec GoogleNews vectors](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
 * [NLPL word embeddings repository](http://vectors.nlpl.eu/repository/)
 
-It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText English Word Vectors (crawl-300d-2M.vec) hosted on Google Drive: 
+It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText English Word Vectors trained on the Common Crawl (crawl-300d-2M.vec) hosted on Google Drive: 
 
 ```r
     library(googledrive) # (see https://googledrive.tidyverse.org/)
     temp <- tempfile()
-    drive_download(as_id("1crWGb3VrS6_2mTdJLKiq9Ymz9dC_7U7N"), path = temp, overwrite = TRUE)
+    drive_download(as_id("1DRBCzd_b_syadZiMxypUnwbNEcsDl2Wg"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
 ```
 
