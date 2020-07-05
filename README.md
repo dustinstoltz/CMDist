@@ -86,12 +86,14 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ```
 
-### Binary Concepts
+### Semantic Directions
 
-In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. The procedure involves generating a list of antonym pairs for a given binary concept. Then we get the differences between the antonyms' respective vectors, and averaging the result (the `get_antodim()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
+In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. We outline this procedure in more detail in a subsequent _JCSS_ paper ["Integrating Semantic Directions with Concept Mover's Distance](https://osf.io/preprints/socarxiv/36r2d/). 
+
+The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between the antonyms' respective vectors, and averaging the result (the `get_antodim()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
 
 ```r
-  # first build the cultural dimension:
+  # first build the semantic direction:
   additions  <- c("death", "casualty", "demise", "dying", "fatality")
   substracts <- c("life", "survivor", "birth", "living", "endure")
 
