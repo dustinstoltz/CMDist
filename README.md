@@ -58,7 +58,7 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 ### Single Word
 
-Once you have a DTM and word embedding matrix, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking."
+Once you have a DTM and word embedding matrix, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking" as our concept word ("cw"):
 
 ```r
   
@@ -90,7 +90,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights from Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. We outline this procedure in more detail in a subsequent _JCSS_ paper ["Integrating Semantic Directions with Concept Mover's Distance](https://osf.io/preprints/socarxiv/36r2d/). 
 
-The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between these antonyms' respective vectors, and averaging the result (the `get_direction()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
+The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between these antonyms' respective vectors, and averaging the result (the `get_direction()` function takes care of this). The resulting vector will be the location of a one "pole" of this binary concept, and `CMDist` calculates the distance each document is from this concept vector ("cv").
 
 ```r
   # first build the semantic direction:
@@ -98,10 +98,23 @@ The procedure involves generating a list of antonym pairs for a given binary con
   substracts <- c("life", "survivor", "birth", "living", "endure")
 
   antonyms <- cbind(additions, substracts)
-  death.cd <- get_antodim(antonyms, my.wv)
+  death.sd <- get_antodim(antonyms, my.wv)
   
   # input it into the function just like a concept word:
-  doc.closeness <- CMDist(dtm = my.dtm, cd = death.cd, wv = my.wv)
+  doc.closeness <- CMDist(dtm = my.dtm, cv = death.sd, wv = my.wv)
+
+```
+
+Instead of building a pseudo-document with several terms, as in the compound concept section above, one could also average several terms together to arrive at a "centroid" in the word embedding space -- this can be understood as referring to the center of a "semantic region." Again, `CMDist` will calculate the distance each document is from this concept vector ("cv").
+
+```r
+  # first build the semantic centroid:
+  terms  <- c("death", "casualty", "demise", "dying", "fatality")
+  
+  death.sc <- get_centroid(terms, my.wv)
+  
+  # input it into the function just like a concept word:
+  doc.closeness <- CMDist(dtm = my.dtm, cv = death.sc, wv = my.wv)
 
 ```
 
@@ -123,7 +136,7 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
     
   # example 3
   concept.words <- c("critical thought", "critical_thinking")
-  doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cd = thinking.cd, wv = my.wv)
+  doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cv = thinking.sd, wv = my.wv)
 
 ```
 
