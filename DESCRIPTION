@@ -1,6 +1,6 @@
 Package: CMDist
 Title: Calculates Concept Mover's Distance
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: 
     c(person(given = "Dustin",
            family = "Stoltz",
@@ -14,7 +14,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-7440-0723") )
 	  )
 Description: The function outputs a dataframe with 
-			 Concept Mover's Distance from specified focal terms
+			 Concept Mover's Distance from specified focal terms or vectors
 			 for each document in a document-term matrix.
 URL: https://github.com/dustin-stoltz/cmdist
 License: GPL-3
