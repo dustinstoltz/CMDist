@@ -6,9 +6,9 @@
 #' @examples cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE)
 #' @export
 #' 
-  CMDist <- function(dtm, cw = NULL, cd = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2) {
+  CMDist <- function(dtm, cw = NULL, cv = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2) {
             
-            list_output <- .prepINPUT(dtm, cw, cd, wv)
+            list_output <- .prepINPUT(dtm, cw, cv, wv)
 
             dtm  <- list_output[[1]]
             pdtm <- list_output[[2]]
