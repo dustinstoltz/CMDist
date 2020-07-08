@@ -122,7 +122,7 @@ Instead of building a pseudo-document with several terms, as in the compound con
 
 ### Multiple Distances at Once
 
-An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts. `CMDist` also incorporate both concept words and cultural dimensions into the same run.
+An analysis might suggest multiple concepts are of interest. As running CMD can take some time, it is useful to get multiple distances at the same time. This, in effect, is adding more rows to our pseudo-document-term matrix. For example, in our _JCSS_ paper, we compare how Shakespeare's plays engage with "death" against 200 other concepts. `CMDist` also incorporate both concept words and vectors into the same run.
 
 ```r
 
@@ -136,7 +136,7 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
     
   # example 3
   concept.words <- c("critical thought", "critical_thinking")
-  doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cv = thinking.sd, wv = my.wv)
+  doc.closeness < CMDist(dtm = my.dtm, cw = concept.words, cv = concept.vectors, wv = my.wv)
 
 ```
 
