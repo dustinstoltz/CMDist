@@ -1,7 +1,7 @@
 # Private helper function to prepare the dtm, the pseudo-dtm, and the word embedding matrix
-# also outputs number of pseudo-documents and the labels for concepts and cultural dimensions
+# also outputs number of pseudo-documents and the labels for concept words and concept vectors (directions and centroid)
 
-    .prepINPUT <- function(dtm, cw = NULL, cd = NULL, wv){
+    .prepINPUT <- function(dtm, cw = NULL, cv = NULL, wv){
                 # make DTM dgCMatrix sparse if not already
                 if(any(class(dtm)=="simple_triplet_matrix") ){
                     dtm2 <-Matrix::sparseMatrix(i=dtm$i, j=dtm$j, x=dtm$v, 
@@ -45,23 +45,23 @@
                     }
                 }
 
-                ## add cultural dimension to DTM and word vectors
-                if( !is.null(cd) ){
-                    n.pd <- n.pd + nrow(cd)
-                    rownames(cd) <- paste0(rownames(cd), ".", 1:nrow(cd) )
-                    wv  <- rbind(wv, cd)
+                ## add concept vector to DTM and word vectors
+                if( !is.null(cv) ){
+                    n.pd <- n.pd + nrow(cv)
+                    rownames(cv) <- paste0(rownames(cv), ".", 1:nrow(cv) )
+                    wv  <- rbind(wv, cv)
                 
-                    cdim <- matrix(0, ncol=nrow(cd), nrow=nrow(dtm) )
-                    colnames(cdim) <- rownames(cd)
+                    cvec <- matrix(0, ncol=nrow(cv), nrow=nrow(dtm) )
+                    colnames(cvec) <- rownames(cv)
 
-                    dtm   <- cbind(dtm, cdim)
-                    st.cd <- unlist(strsplit(colnames(cdim), " ") )
+                    dtm   <- cbind(dtm, cvec)
+                    st.cv <- unlist(strsplit(colnames(cvec), " ") )
                 }
 
                 # create a full list of unique vocabulary for each pseudo-doc
-                if( !is.null(cd) & !is.null(cw)){st <- c(st.cw, st.cd)}
-                if( !is.null(cd) &  is.null(cw)){st <- st.cd}
-                if(  is.null(cd) & !is.null(cw)){st <- st.cw}
+                if( !is.null(cv) & !is.null(cw)){st <- c(st.cw, st.cv)}
+                if( !is.null(cv) &  is.null(cw)){st <- st.cv}
+                if(  is.null(cv) & !is.null(cw)){st <- st.cw}
 
                 ## prepare word embeddings
                 wem  <- wv[intersect(rownames(wv), colnames(dtm)), ]
@@ -79,14 +79,14 @@
                   	}
 
                   # make labels
-                  if( !is.null(cd) & !is.null(cw)){
+                  if( !is.null(cv) & !is.null(cw)){
                           cw.labs <- gsub('(^\\w+)\\s.+','\\1', cw)
-                          labs <- c(cw.labs, unlist(st.cd ) )}
+                          labs <- c(cw.labs, unlist(st.cv ) )}
 
-                  if(  is.null(cd) & !is.null(cw)){
+                  if(  is.null(cv) & !is.null(cw)){
                           cw.labs <- gsub('(^\\w+)\\s.+','\\1', cw)
                           labs <- cw.labs}
-                  if( !is.null(cd) &  is.null(cw)){labs <- st.cd}
+                  if( !is.null(cv) &  is.null(cw)){labs <- st.cv}
 
                   rownames(pdtm) <- c(labs, "zee_extra_row")
                   # make a list of the three matrices and the number of pseudo-docs, and the labels
