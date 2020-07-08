@@ -97,8 +97,8 @@ The procedure involves generating a list of antonym pairs for a given binary con
   additions  <- c("death", "casualty", "demise", "dying", "fatality")
   substracts <- c("life", "survivor", "birth", "living", "endure")
 
-  antonyms <- cbind(additions, substracts)
-  death.sd <- get_antodim(antonyms, my.wv)
+  pairs <- cbind(additions, substracts)
+  death.sd <- get_direction(pairs, my.wv)
   
   # input it into the function just like a concept word:
   doc.closeness <- CMDist(dtm = my.dtm, cv = death.sd, wv = my.wv)
