@@ -40,7 +40,7 @@ It will take a little data wrangling to get these loaded as a matrix in R with r
 
 You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
 
-One important caveat: the word used to denote a concept or build a cultural dimension need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
+One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
 ## USE
 
@@ -86,11 +86,11 @@ What if instead of a compound concept we are interested in a common concept repr
 
 ```
 
-### Semantic Directions
+### Semantic Directions and Centroids
 
-In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights developed in Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. We outline this procedure in more detail in a subsequent _JCSS_ paper ["Integrating Semantic Directions with Concept Mover's Distance](https://osf.io/preprints/socarxiv/36r2d/). 
+In the original _JCSS_ paper, we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights from Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. We outline this procedure in more detail in a subsequent _JCSS_ paper ["Integrating Semantic Directions with Concept Mover's Distance](https://osf.io/preprints/socarxiv/36r2d/). 
 
-The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between the antonyms' respective vectors, and averaging the result (the `get_antodim()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
+The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between these antonyms' respective vectors, and averaging the result (the `get_direction()` function takes care of this). The resulting vector will be the location of a one "pole" of this cultural dimension, and CMD calculates the distance each document is from this pole.
 
 ```r
   # first build the semantic direction:
