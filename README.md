@@ -142,7 +142,7 @@ An analysis might suggest multiple concepts are of interest. As running CMD can 
 
 ### Performance and Parallel CMDist
 
-Calculating `CMD` (as of version 0.6.0) relies on [Linear Complexity RWMD](https://arxiv.org/abs/1711.07227) or `LC-RWMD`. The performance gain over the previous `RWMD` implementation is considerable. Nevertheless, it may be desireable to boost performance further on especially large projects. 
+Calculating `CMD` (as of version 0.5.0) relies on [Linear Complexity RWMD](https://arxiv.org/abs/1711.07227) or `LC-RWMD`. The performance gain over the previous `RWMD` implementation is considerable. Nevertheless, it may be desireable to boost performance further on especially large projects. 
 
 One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we built it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
 
