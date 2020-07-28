@@ -6,7 +6,7 @@
 #' @examples cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE)
 #' @export
 #' 
-  CMDist <- function(dtm, cw = NULL, cv = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2) {
+  CMDist <- function(dtm, cw = NULL, cv = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2, setup_timeout = 120) {
             
             list_output <- .prepINPUT(dtm, cw, cv, wv)
 
@@ -29,7 +29,7 @@
               require("doSNOW")
               # Determine chunk-size to be processed by different threads
               ind <- bigstatsr:::CutBySize(nrow(dtm), nb = threads)
-              cl  <- parallel::makeCluster(threads)
+              cl  <- parallel::makeCluster(threads, setup_timeout = setup_timeout)
               doSNOW::registerDoSNOW(cl)
               dist <- .parDist2(dtm, pdtm, wem, ind, method)
               on.exit(parallel::stopCluster(cl))
