@@ -3,7 +3,7 @@
 #' The function outputs a dataframe with Concept Mover's Distances for each document.
 #' @references \url{https://journals.sagepub.com/doi/10.1177/2378023119827674}
 #' @param Function requires a document-term matrix and a matrix of word embeddings.
-#' @examples cm.dists <- CMDist(dtm, cw = "death", wv = wordvectors, scale = TRUE)
+#' @examples cm.dists <- CMDist(dtm, cw = "death", cv = concept.vectors)
 #' @export
 #' 
   CMDist <- function(dtm, cw = NULL, cv = NULL, wv, method = "cosine", scale = TRUE, parallel = FALSE, threads = 2, setup_timeout = 120) {
@@ -46,7 +46,6 @@
               df <- as.data.frame(dist[,1:n.pd])
             }
 
-            # convert distances to similarities
             if(scale == TRUE) {
               df <- as.data.frame(scale(df))
             }
