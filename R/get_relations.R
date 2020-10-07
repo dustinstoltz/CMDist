@@ -18,6 +18,12 @@
                }
 
    get_centroid <- function(terms, wv){
+          
+        # convert list of terms into data.frame
+        if(is.data.frame(terms)!=TRUE){
+        terms <- as.data.frame(terms)
+              }
+
         # check that word vectors exist for all words
         .check_terms_in_embeddings(terms, wv)
 
