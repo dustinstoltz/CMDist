@@ -118,6 +118,47 @@ Instead of building a pseudo-document with several terms, as in the compound con
 
 ```
 
+## Concept Class Analysis
+
+Concept Class Analysis (CoCA) is a method for grouping documents based on their schematic similarities in their engagement with multiple semantic directions. This is a generalization of Correlational Class Analysis for survey data. 
+
+The first step to use CoCA is build two or more semantic directions. For example, here are three semantic directions related to socio-economic status:
+
+```r
+    # build juxtaposed pairs for each semantic directions
+    pairs.01 <- data.frame(additions  = c("rich", "richer", "affluence", "wealthy"),
+                           substracts = c("poor", "poorer", "poverty", "impoverished") )
+
+    pairs.02 <- data.frame(additions  = c("skilled", "competent", "proficient", "adept"),
+                          substracts = c("unskilled", "incompetent", "inproficient", "inept") )
+    
+    pairs.03 <- data.frame(additions  = c("educated", "learned", "trained", "literate"),
+                           substracts = c("uneducated", "unlearned", "untrained", "illiterate") )
+    
+    # get the vectors for each direction
+    sd.01 <- get_direction(pairs.01, my.wv)
+    sd.02 <- get_direction(pairs.02, my.wv)
+    sd.03 <- get_direction(pairs.03, my.wv)
+
+    # row bind each direction
+    sem.dirs <- rbind(sd.01, sd.02, sd.03)
+````
+Next, we feed our document-term matrix, word embeddings matrix, and our semantic direction dataframe from above to the `CoCA` function:
+
+```r
+  classes <- CMDist::CoCA(blog.dtm, wv = my.wv, directions = sem.dirs)
+  print(classes)
+```
+
+Finally, using the `plot()` function, we can generate simple visualizations of the schematic classes found:
+
+```r
+  # this is a quick plot. 
+  # designate which module to plot with `module = `
+  plot(classes, module=1)
+```
+
+
 ## Other Options and Considerations
 
 ### Multiple Distances at Once
