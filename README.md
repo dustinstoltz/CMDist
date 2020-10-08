@@ -120,7 +120,7 @@ Instead of building a pseudo-document with several terms, as in the compound con
 
 ## Concept Class Analysis
 
-Concept Class Analysis (CoCA) is a method for grouping documents based on their schematic similarities in their engagement with multiple semantic directions. This is a generalization of Correlational Class Analysis for survey data. 
+Concept Class Analysis (CoCA) is a method for grouping documents based on their schematic similarities in their engagement with multiple semantic directions. This is a generalization of Correlational Class Analysis for survey data. We outline this method in more detail in a forthcoming _Sociological Science_ paper, "Concept Mover's Distance: A Method for Identifying Cultural Schemas in Texts."
 
 The first step to use CoCA is build two or more semantic directions. For example, here are three semantic directions related to socio-economic status:
 
