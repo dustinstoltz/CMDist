@@ -3,4 +3,8 @@
 export(CMDist)
 export(get_direction)
 export(get_centroid)
+export(CoCA)
+
+S3method("plot", "cca")
+S3method("print", "cca")
 # export(kusnerRWMD)
