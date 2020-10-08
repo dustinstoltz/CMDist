@@ -1,6 +1,6 @@
 Package: CMDist
-Title: Calculates Concept Mover's Distance
-Version: 0.5.0
+Title: Concept Mover's Distance and supporting functions
+Version: 0.6.0
 Authors@R: 
     c(person(given = "Dustin",
            family = "Stoltz",
@@ -13,9 +13,12 @@ Authors@R:
            email = "mtaylo15@alumni.nd.edu",
            comment = c(ORCID = "0000-0002-7440-0723") )
 	  )
-Description: The function outputs a dataframe with 
-			 Concept Mover's Distance from specified focal terms or vectors
-			 for each document in a document-term matrix.
+Description: This package includes function that outputs a dataframe with 
+             Concept Mover's Distance from specified focal terms or vectors
+	     for each document in a document-term matrix. Additionally, 
+	     a function is included to apply Correlational Class Analysis to 
+	     group documents into schematic classes based on Concept Mover's Distances.
+	     
 URL: https://github.com/dustin-stoltz/cmdist
 License: GPL-3
 Encoding: UTF-8
