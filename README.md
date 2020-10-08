@@ -146,7 +146,7 @@ The first step to use CoCA is build two or more semantic directions. For example
 Next, we feed our document-term matrix, word embeddings matrix, and our semantic direction dataframe from above to the `CoCA` function:
 
 ```r
-  classes <- CMDist::CoCA(blog.dtm, wv = my.wv, directions = sem.dirs)
+  classes <- CMDist::CoCA(my.dtm, wv = my.wv, directions = sem.dirs)
   print(classes)
 ```
 
