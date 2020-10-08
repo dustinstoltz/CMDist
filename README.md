@@ -42,7 +42,7 @@ You can also create your own embeddings trained on the corpus on which you are u
 
 One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
-## USE
+## Getting CMDs
 
 ### Selecting Terms Denoting Focal Concepts
 
@@ -118,7 +118,7 @@ Instead of building a pseudo-document with several terms, as in the compound con
 
 ```
 
-## OTHER OPTIONS AND CONSIDERATIONS
+## Other Options and Considerations
 
 ### Multiple Distances at Once
 
