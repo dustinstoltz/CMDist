@@ -56,7 +56,7 @@ The most difficult and important part of using Concept Mover's Distance is selec
 
 ```
 
-### Single Word
+#### Single Word
 
 Once you have a DTM and word embedding matrix, the simplest use of `CMDist` involves finding the closeness to a focal concept denoted by a _single word_. Here, we use the word "thinking" as our concept word ("cw"):
 
@@ -66,7 +66,7 @@ Once you have a DTM and word embedding matrix, the simplest use of `CMDist` invo
 
 ```
 
-### Compound Concepts
+#### Compound Concepts
 
 However, we may be interested in _specifying_ the concept with additional words: for example, we might want to capture "critical thinking." To handle this, it is as simple as including both words separated by a space in the quotes. This creates a pseudo-document that contains only "critical" and "thinking."
 
@@ -76,7 +76,7 @@ However, we may be interested in _specifying_ the concept with additional words:
 
 ```
 
-### Ngrams
+#### Ngrams
 
 What if instead of a compound concept we are interested in a common concept represented with two words (i.e., a bigram)? First, just like with any other word, the ngram must be in the embedding matrix (the fastText pre-trained embeddings have a lot of n&ge;1 grams). As long as the ngram is in the embeddings, the only difference for `CMDist` is that an underscore rather than a space needs to be placed between words: 
 
