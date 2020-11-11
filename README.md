@@ -44,7 +44,7 @@ One important caveat: the terms used to denote a concept or build a semantic dir
 
 ## Getting CMDs
 
-### Selecting Terms Denoting Focal Concepts
+### Terms Denoting Focal Concepts
 
 The most difficult and important part of using Concept Mover's Distance is selecting terms. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, and (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
 
@@ -120,7 +120,7 @@ Instead of building a pseudo-document with several terms, as in the compound con
 
 ## Concept Class Analysis
 
-Concept Class Analysis (CoCA) is a method for grouping documents based on the schematic similarities in their engagement with multiple semantic directions (as measured in the previous section). This is a generalization of [Correlational Class Analysis](https://sociologicalscience.com/articles-v4-15-353/) for survey data. We outline this method in more detail in our _Sociological Science_ paper, "[http://dx.doi.org/10.15195/v7.a23](Concept Class Analysis: A Method for Identifying Cultural Schemas in Texts)."
+Concept Class Analysis (CoCA) is a method for grouping documents based on the schematic similarities in their engagement with multiple semantic directions (as measured in the previous section). This is a generalization of [Correlational Class Analysis](https://sociologicalscience.com/articles-v4-15-353/) for survey data. We outline this method in more detail in our _Sociological Science_ paper, "[Concept Class Analysis: A Method for Identifying Cultural Schemas in Texts](http://dx.doi.org/10.15195/v7.a23)."
 
 The first step to use CoCA is build two or more semantic directions. For example, here are three semantic directions related to socio-economic status:
 
