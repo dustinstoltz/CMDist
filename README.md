@@ -6,11 +6,20 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_sotu_family_time.png?raw=true" width="700" height="500">
 
 **Table of Contents**
-- [Citation](#citation)
-- [Installing](#installing)
-- [Document-Term Matrix](#document-term-matrix)
+- [Setup](#setup)
+  - [Citation](#citation)
+  - [Installing](#installing)
+  - [Document-Term Matrix](#document-term-matrix)
+  - [Word Embeddings Matrix](#word-embeddings-matrix)
+- [Measuring Conceptual Engagement](measuring-conceptual-engagement)
+  - [Terms Denoting Focal Concepts](#term-denoting-focal-concepts)
+  - [Semantic Directions and Centroids](#semantic-directions-and-centroids)
+- [Concept Class Analysis](#concept-class-analysis)
+- [Other Options and Considerations](#other-options-and-considerations)
 
-## Citation
+## Setup
+
+### Citation
 Stoltz, Dustin S., and Marshall A. Taylor. 2019. "Concept Mover's Distance." *Journal of Computational Social Science* 2(2):293-313.
 
 ```
@@ -26,7 +35,7 @@ Stoltz, Dustin S., and Marshall A. Taylor. 2019. "Concept Mover's Distance." *Jo
 }
 ```
 
-## Installing
+### Installing
 
 Install and load the `CMDist` package from GitHub:
 ```r
@@ -36,11 +45,11 @@ Install and load the `CMDist` package from GitHub:
 
 ```
 
-## Document-Term Matrix
+### Document-Term Matrix
 
 To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix in `Matrix` format (class "dgCMatrix") as output by `text2vec`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` or `Quanteda` package or a regular old base R dense matrix.
 
-##  Word Embeddings Matrix
+###  Word Embeddings Matrix
 
 You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. Word embedding vectors can be from a __pre-trained source__, for example:
 * [Stanford NLP GloVe vectors](https://nlp.stanford.edu/projects/glove/)
