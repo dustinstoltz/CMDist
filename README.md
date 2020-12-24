@@ -24,7 +24,7 @@ Stoltz, Dustin S., and Marshall A. Taylor. 2019. "Concept Mover's Distance." *Jo
 
 ```
 @article{stoltz2019concept,
-  title={Concept Mover’s Distance: measuring concept engagement via word embeddings in texts},
+  title={Concept Mover’s Distance},
   author={Stoltz, Dustin S and Taylor, Marshall A},
   journal={Journal of Computational Social Science},
   volume={2},
