@@ -5,6 +5,11 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 
 <img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_sotu_family_time.png?raw=true" width="700" height="500">
 
+**Table of Contents**
+- [Citation](#citation)
+- [Installing](#installing)
+- [Document-Term Matrix](#Document-Term Matrix)
+
 ## Citation
 Stoltz, Dustin S., and Marshall A. Taylor. 2019. "Concept Mover's Distance." *Journal of Computational Social Science* 2(2):293-313.
 
@@ -33,7 +38,7 @@ Install and load the `CMDist` package from GitHub:
 
 ## Document-Term Matrix
 
-To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix as output by `text2vec`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` or `Quanteda` package or a regular old base R matrix.
+To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix in `Matrix` format (class "dgCMatrix") as output by `text2vec`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` or `Quanteda` package or a regular old base R dense matrix.
 
 ##  Word Embeddings Matrix
 
@@ -52,9 +57,11 @@ It will take a little data wrangling to get these loaded as a matrix in R with r
     temp <- tempfile()
     drive_download(as_id("1DRBCzd_b_syadZiMxypUnwbNEcsDl2Wg"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
+    # save them to your project file so you don't have to re-download
+    saveRDS(my.wv, "data/fastext_embeddings.Rds")
 ```
 
-You can also create your own embeddings trained on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
+You can also create your own embeddings trained locally on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
 
 One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
 
