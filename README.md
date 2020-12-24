@@ -8,7 +8,7 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 **Table of Contents**
 - [Citation](#citation)
 - [Installing](#installing)
-- [Document-Term Matrix](#Document-Term Matrix)
+- [Document-Term Matrix](#document-term-matrix)
 
 ## Citation
 Stoltz, Dustin S., and Marshall A. Taylor. 2019. "Concept Mover's Distance." *Journal of Computational Social Science* 2(2):293-313.
