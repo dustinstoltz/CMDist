@@ -18,7 +18,6 @@ Description: This package includes function that outputs a dataframe with
 	     for each document in a document-term matrix. Additionally, 
 	     a function is included to apply Correlational Class Analysis to 
 	     group documents into schematic classes based on Concept Mover's Distances.
-	     
 URL: https://github.com/dustin-stoltz/cmdist
 License: GPL-3
 Encoding: UTF-8
