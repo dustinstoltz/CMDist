@@ -64,7 +64,7 @@ It will take a little data wrangling to get these loaded as a matrix in R with r
 ```r
     library(googledrive) # (see https://googledrive.tidyverse.org/)
     temp <- tempfile()
-    drive_download(as_id("1DRBCzd_b_syadZiMxypUnwbNEcsDl2Wg"), path = temp, overwrite = TRUE)
+    drive_download(as_id("17H4GOGedeGo0urQdDC-4e5qWQMeWLpGG"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
     # save them to your project file so you don't have to re-download
     saveRDS(my.wv, "data/fastext_embeddings.Rds")
