@@ -51,7 +51,7 @@ To use the Concept Mover's Distance (CMD) function, you will need to transform y
 
 ###  Word Embeddings Matrix
 
-You will also need a matrix of word embeddings vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. Word embedding vectors can be from a __pre-trained source__, for example:
+You will also need a matrix of word embedding vectors (with the "words" as rownames), and ultimately, CMD is only as good as the word embeddings used. Word embedding vectors can be from a __pre-trained source__, for example:
 * [Stanford NLP GloVe vectors](https://nlp.stanford.edu/projects/glove/)
 * [fastText (Various) English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
 * [fastText Wiki and Common Crawl vectors for 294 languages](https://fasttext.cc/docs/en/pretrained-vectors.html)
