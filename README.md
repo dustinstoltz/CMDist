@@ -61,18 +61,22 @@ You will also need a matrix of word embeddings vectors (with the "words" as rown
 
 It will take a little data wrangling to get these loaded as a matrix in R with rownames as the words, or you can just download these R-ready fastText English Word Vectors trained on the Common Crawl (crawl-300d-2M.vec) hosted on Google Drive: 
 
+- [ft.cc.en.300D.2M.Rds (1.4 Gb)](https://drive.google.com/file/d/17H4GOGedeGo0urQdDC-4e5qWQMeWLpGG/view?usp=sharing)
+
+You can also download the file directly into your R environment using the following:
+
 ```r
     library(googledrive) # (see https://googledrive.tidyverse.org/)
     temp <- tempfile()
     drive_download(as_id("17H4GOGedeGo0urQdDC-4e5qWQMeWLpGG"), path = temp, overwrite = TRUE)
     my.wv <- readRDS(temp)
     # save them to your project file so you don't have to re-download
-    saveRDS(my.wv, "data/fastext_embeddings.Rds")
+    saveRDS(my.wv, "data/ft.cc.en.300D.2M.Rds")
 ```
 
-You can also create your own embeddings trained locally on the corpus on which you are using CMD -- i.e. __corpus-trained embeddings__. For example, the `text2vec` R package uses the GloVe method to train embeddings. As we discuss in our paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context.
+You can create your own embeddings trained locally on the corpus on which you are using CMD. For example, the `text2vec` R package provides a nice [workflow for using the GloVe method to train embeddings](https://cran.r-project.org/web/packages/text2vec/vignettes/glove.html). As we discuss in our original paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context. Pretrained embeddings are a simple way to get an analysis started, but researchers should always be critical about the corpus used to train these models.
 
-One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used).
+One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used). As the fastText method can be trained on "subword" character strings, it is possible to average the character strings that make up an out-of-vocabulary term.
 
 ## Measuring Conceptual Engagement
 
@@ -220,7 +224,6 @@ Calculating `CMD` (as of version 0.5.0) relies on [Linear Complexity RWMD](https
 One way to reduce complexity and thus time (without a noticeable drop in accuracy) is by removing very sparse terms in your DTM. Parallelizing is another option, so we built it in. To use parallel calculations just set `parallel = TRUE`. The default number of threads is 2, but you can set it as high as you have threads/cores (but usually you want to use less than your maximum).
 
 ```r
-  
   doc.closeness <- CMDist(dtm = my.dtm, cw = "critical_thinking", wv = my.wv, 
                           parallel = TRUE, threads = 2)
 
