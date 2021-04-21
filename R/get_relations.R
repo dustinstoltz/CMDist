@@ -1,74 +1,94 @@
-#' Word Embedding Semantic Direction and Centroid Builder functions
+#' Word Embedding Semantic Direction Builder
 #'
-#' The get_direction outputs a vector corresponding to one pole of the "semantic direction" built from pairs of antonyms or juxtposed terms. The get_centroid outputs an averaged vector from a set of terms
-#' 
-#' 
-#' @param Both functions require a matrix of word embeddings. get_direction requires a two column dataframe of juxtoposed pairs. get_centroid requires a one column dataframe with pairs of terms to be averaged.
-#' @examples sd <- get_direction(pairs, wv)
+#' The `get_direction` function outputs a vector corresponding to 
+#' one pole of the "semantic direction" in a word embedding 
+#' space built from sets of antonyms or juxtaposed terms.
+#'
+#' @name get_direction
+#' @author Dustin Stoltz
+#'
+#' @param anchors two column dataframe of juxtoposed "anchor" terms
+#' @param wv matrix of word embeddings
+#' @param method method used to calculate vector offset
 #' @export
+get_direction <- function(anchors, wv, method = "paired"){
+  # check that word vectors exist for all words
+  .check_terms_in_embeddings(anchors, wv)
 
-       # checks that all terms are in the word embeddings
-       .check_terms_in_embeddings <- function(terms, wv){
-               words <- unlist( terms)
-               bad.words <- words[!(words %in% rownames(wv) )]
-               if( length(bad.words) != 0 ){
-               bad.words <- paste(bad.words, collapse='; ' ) 
-               stop(paste0("No word vectors for the following words: ", bad.words) )
-                   }
-               }
+  # take the mean of a set of word vector differences
+  # between a collection of antonym word pairs
+  # as used in Kozlowski et al. 2019 and Stoltz and Taylor 2019
+  if(method == "paired"){
+    # subtract vectors for words in column 2 from words in column 1
+    v <- wv[anchors[,1, drop=TRUE]  , , drop=FALSE] -
+         wv[anchors[,2, drop=TRUE] , , drop=FALSE]
+    # get the average of the resulting differences
+    v <- t(as.matrix( colMeans(v) ) )
+  }
 
-   get_centroid <- function(terms, wv){
-          
-        # convert list of terms into data.frame
-        if(is.data.frame(terms)!=TRUE){
-        terms <- as.data.frame(terms)
-              }
+  # average  the vectors for words on each pole,
+  # then take the difference between these two average
+  # as used in Larsen et al 2015 and Arseniev-Koehler and Foster 2020
+  if(method == "pooled"){
+    mu1 <- t(as.matrix(colMeans(
+      wv[anchors[,1, drop=TRUE]  , , drop=FALSE]) ) )
+    mu2 <- t(as.matrix(colMeans(
+      wv[anchors[,2, drop=TRUE]  , , drop=FALSE]) ) )
+    v   <- mu1 - mu2
+  }
 
-        # check that word vectors exist for all words
-        .check_terms_in_embeddings(terms, wv)
+  # Euclidean norm
+  # as used in Bolukbasi et al. 2016
+  if(method == "euclidean"){
+    v <- wv[anchors[,1, drop=TRUE] , , drop=FALSE] -
+      wv[anchors[,2, drop=TRUE] , , drop=FALSE]
+    # get the average of the resulting differences
+    v <- t(as.matrix( colMeans(v) ) )
+    # divide by Euclidean norm
+    v <- v/norm(v, type="2")
+  }
 
-            # get vectors for words in column 1
-            v <- wv[ terms[, 1, drop=TRUE]  , , drop = FALSE]
-            # get the average of the resulting vector
-            v <- t(as.matrix( colMeans(v) ) )
+  # create unique name
+  rownames(v) <- paste0( anchors[1,1], ".pole")
+  return(v)
 
-        # create unique name
-        rownames(v) <- paste0( terms[1,1], ".centroid")
-        return(v)
-        }
-   
-   get_direction <- function(pairs, wv, method = "KTE"){
-         # check that word vectors exist for all words
-         .check_terms_in_embeddings(pairs, wv)
+}
 
-        # Kozlowski et al. 2019:
-        # take the mean  of a set of word vector differences between a collection of antonym word pairs 
-        if(method == "KTE"){
-            # subtract vectors corresponding to words in column 2 from words in column 1
-            v <- wv[ pairs[,1, drop=TRUE]  , , drop = FALSE] - wv[pairs[,2,drop=TRUE] , , drop = FALSE]
-            # get the average of the resulting differences
-            v <- t(as.matrix( colMeans(v) ) )
-            }
+#' Word Embedding Semantic Centroid Builder
+#'
+#' `get_centroid` requires a one column dataframe or list of
+#' terms to be averaged. The function outputs an averaged
+#' vector from a set of terms.
+#'
+#' @name get_centroid
+#' @author Dustin Stoltz
+#'
+#' @param anchors list of terms to be averaged
+#' @param wv matrix of word embeddings.
+#' @export
+get_centroid <- function(anchors, wv){
 
-        # Larsen et al 2015:
-        # average  the vectors for words on each pole, then take the difference between these two average
-        if(method == "LSLW"){
-            mu1 <- t(as.matrix(colMeans(wv[ pairs[,1, drop=TRUE]  , , drop = FALSE]) ) )
-            mu2 <- t(as.matrix(colMeans(wv[ pairs[,2, drop=TRUE]  , , drop = FALSE]) ) )
-            v   <- mu1 - mu2
-            }
+  # check that word vectors exist for each word
+  .check_terms_in_embeddings(anchors, wv)
 
-        # Bolukbasi et al. 2016a: Euclidean norm
-        if(method == "BCZSKa"){ 
-            v <- wv[ pairs[,1, drop=TRUE]  , , drop = FALSE] - wv[pairs[,2,drop=TRUE] , , drop = FALSE]
-            # get the average of the resulting differences
-            v <- t(as.matrix( colMeans(v) ) )
-            # divide by Euclidean norm
-            v <- v/norm(v, type="2")   
-            }
+  # select vectors for words in column 1
+  v <- wv[ anchors[(anchors %in% rownames(wv) )], , drop = FALSE]
+  # average the resulting vector
+  v <- t(as.matrix( colMeans(v) ) )
 
-        # create unique name
-        rownames(v) <- paste0( pairs[1,1], ".pole")
-        return(v)
+  # create unique name
+  rownames(v) <- paste0( anchors[[1]], ".centroid")
+  return(v)
+}
 
-        }
+
+# INTERNAL FUNCTIONS
+# checks that all terms are in the word embeddings
+.check_terms_in_embeddings <- function(terms, wv){
+  words <- unlist(terms)
+  bad.words <- words[!(words %in% rownames(wv) )]
+  if( length(bad.words) != 0 ){
+    bad.words <- paste(bad.words, collapse='; ' )
+    stop(paste0("No word vectors for the following words: ", bad.words) )
+  }
+}
