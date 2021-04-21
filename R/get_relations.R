@@ -7,13 +7,18 @@
 #' @name get_direction
 #' @author Dustin Stoltz
 #'
-#' @param anchors two column dataframe of juxtoposed "anchor" terms
+#' @param anchors two column data.frame or matrix of juxtoposing "anchor" terms
 #' @param wv matrix of word embeddings
 #' @param method method used to calculate vector offset
 #' @export
 get_direction <- function(anchors, wv, method = "paired"){
   # check that word vectors exist for all words
   .check_terms_in_embeddings(anchors, wv)
+  
+  # convert data.frame to matrix
+  if(is.data.frame(anchors) == TRUE){
+    anchors <- as.matrix(anchors)
+  }
 
   # take the mean of a set of word vector differences
   # between a collection of antonym word pairs
