@@ -47,7 +47,7 @@ Install and load the `CMDist` package from GitHub:
 
 ### Document-Term Matrix
 
-To use the Concept Mover's Distance (CMD) function, you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix in `Matrix` format (class "dgCMatrix") as output by `text2vec`, `Quanteda`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` package (technically a "simple_triplet_matrix") or just a regular old base R dense matrix ([see this for a comparison of DTM creation methods](https://www.dustinstoltz.com/blog/2020/12/1/creating-document-term-matrix-comparison-in-r)).
+To use the Concept Mover's Distance function (`CMDist`) , you will need to transform your corpus into a document-term matrix (DTM). The preferred DTM is a sparse matrix in `Matrix` format (class "dgCMatrix") as output by `text2vec`, `Quanteda`, `udpipe`, and `tidytext`'s `cast_sparse` function, but we have tried to make the package accommodate DTMs made with the `tm` package (technically a "simple_triplet_matrix") or just a regular old base R dense matrix ([see this for a comparison of DTM creation methods](https://www.dustinstoltz.com/blog/2020/12/1/creating-document-term-matrix-comparison-in-r)).
 
 ###  Word Embeddings Matrix
 
@@ -74,7 +74,7 @@ You can also download the file directly into your R environment using the follow
     saveRDS(my.wv, "data/ft.cc.en.300D.2M.Rds")
 ```
 
-You can create your own embeddings trained locally on the corpus on which you are using CMD. For example, the `text2vec` R package provides a nice [workflow for using the GloVe method to train embeddings](https://cran.r-project.org/web/packages/text2vec/vignettes/glove.html). As we discuss in our original paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context. Pretrained embeddings are a simple way to get an analysis started, but researchers should always be critical about the corpus used to train these models.
+You can create your own embeddings trained locally on the corpus on which you are using `CMDist`. For example, the `text2vec` R package provides a nice [workflow for using the GloVe method to train embeddings](https://cran.r-project.org/web/packages/text2vec/vignettes/glove.html). As we discuss in our original paper, the decision to use pre-trained vs corpus-trained is understudied as applied in the social-scientific context. Pretrained embeddings are a simple way to get an analysis started, but researchers should always be critical about the corpus used to train these models.
 
 One important caveat: the terms used to denote a concept or build a semantic direction need not be in the corpus, _but it must be in the word embeddings matrix_. If it is not, the function will stop and let you know. This means, obviously, that corpus-trained embeddings cannot be used with words not in the corpus (pre-trained must be used). As the fastText method can be trained on "subword" character strings, it is possible to average the character strings that make up an out-of-vocabulary term.
 
@@ -82,7 +82,7 @@ One important caveat: the terms used to denote a concept or build a semantic dir
 
 ### Terms Denoting Focal Concepts
 
-The most difficult and important part of using Concept Mover's Distance is selecting terms. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, and (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
+The most difficult and important part of using Concept Mover's Distance is selecting anchor terms. This should be driven by (a) theory, (b) prior literature, (c) domain knowledge, and (d) the word embedding space. One way of double-checking that selected terms are approriate is to look at the term's nearest neighbors. Here we use the `sim2` function from `text2vec` to get the cosine distance between "thinking" and its top 10 nearest neighbors.
 
 ```r
     
@@ -126,7 +126,7 @@ What if instead of a compound concept we are interested in a common concept repr
 
 In the [original _JCSS_ paper](https://www.researchgate.net/profile/Dustin_Stoltz/publication/334847086_Concept_Mover%27s_Distance_measuring_concept_engagement_via_word_embeddings_in_texts/links/5d768064a6fdcc9961bc6a0c/Concept-Movers-Distance-measuring-concept-engagement-via-word-embeddings-in-texts.pdf), we discussed the "binary concept problem," where documents that are close to a concept with a binary opposite will likely also be close to both opposing poles. For example if a document is close to "love" it will also be close to "hate." But, very often an analyst will want to know whether a document is close to one pole or the other of this binary concept. To deal with this we incorporate insights from Kozlowski et al's (2019) paper ["Geometry of Culture"](https://journals.sagepub.com/doi/full/10.1177/0003122419877135) to define "semantic directions" within word embeddings -- i.e. pointing toward one pole and away from the other. We outline this procedure in more detail in a subsequent _JCSS_ paper ["Integrating Semantic Directions with Concept Mover's Distance to Measure Binary Concept Engagement"](https://osf.io/preprints/socarxiv/36r2d/). 
 
-The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between these antonyms' respective vectors, and averaging the result (the `get_direction()`--previously called `get_antodim()`--function takes care of this). The resulting vector will be the location of a one "pole" of this binary concept, and `CMDist` calculates the distance each document is from this concept vector ("cv").
+The procedure involves generating a list of antonym pairs for a given binary concept -- that is, terms which may occur in similar contexts but are typically juxtaposed. Then we get the differences between these antonyms' respective vectors, and averaging the result (with `get_direction()`). The resulting vector will be the location of one "pole" of this binary concept, and `CMDist` calculates the distance each document is from this concept vector ("cv"). As this creates a one-dimensional continuum, documents that are far from this "pole" will be close to the opposing "pole."
 
 ```r
   # first build the semantic direction:
