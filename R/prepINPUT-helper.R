@@ -21,7 +21,7 @@
                 # if concept words are provided
                 if( !is.null(cw) ){
                     ## Make sure there are no extra spaces for concept words
-                    cw <- str_trim(cw)
+                    cw <- stringr::str_trim(cw)
                     n.pd <- length(cw)
                     vocab <- unique(unlist( strsplit(cw, " ") ) )
                     check <- data.frame(vocab, result = 
