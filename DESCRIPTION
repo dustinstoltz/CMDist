@@ -27,6 +27,7 @@ Imports:
     doSNOW,
     Matrix,
     parallel,
+    stringr,
     bigstatsr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
