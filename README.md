@@ -3,7 +3,7 @@ R package for Concept Mover's Distance, a measure of concept engagement in texts
 
 [Dustin S. Stoltz](https://www.dustinstoltz.com) and [Marshall A. Taylor](https://www.marshalltaylor.net)
 
-<img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/images/Figure_sotu_family_time.png?raw=true" width="700" height="500">
+<img align="middle" src="https://github.com/dustinstoltz/CMDist/blob/master/2019_Stoltz_Taylor_concept_movers_distance.png?raw=true" width="700" height="500">
 
 **Table of Contents**
 - [Setup](#setup)
